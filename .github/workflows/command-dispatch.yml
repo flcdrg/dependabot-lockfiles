@@ -6,10 +6,6 @@ jobs:
   slashCommandDispatch:
     runs-on: ubuntu-latest
     steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
 
       - uses: xt0rted/pull-request-comment-branch@v1
         id: comment-branch
@@ -30,4 +26,4 @@ jobs:
           dispatch-type: workflow
           static-args: |
             repository=${{ github.repository }}
-            comment-id=${{ github.event.comment.id }}
+            ref=${{ steps.comment-branch.outputs.ref }}
