@@ -15,7 +15,6 @@ jobs:
         with:
           fetch-depth: 0 # full history
           token: ${{ secrets.PAT_REPO_FULL }}
-          ref: ${{ github.event.inputs.ref }}
 
       - name: Setup .NET 5
         uses: actions/setup-dotnet@v1
