@@ -1,0 +1,33 @@
+name: Update lockfiles
+on:
+  workflow_dispatch:
+    inputs:
+      repository:
+        description: 'The repository from which the slash command was dispatched'
+        required: true
+      comment-id:
+        description: 'The comment-id of the slash command'
+        required: true
+        
+jobs:
+  lockfiles:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # full history
+          token: ${{ secrets.PAT_REPO_FULL }}
+
+      - name: Setup .NET 5
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+
+      - name: Restore dependencies
+        run: |
+          dotnet restore --force-evaluate
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update lockfiles
+
