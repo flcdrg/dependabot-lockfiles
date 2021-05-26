@@ -26,4 +26,4 @@ jobs:
           dispatch-type: workflow
           static-args: |
             repository=${{ github.repository }}
-            ref=${{ steps.comment-branch.outputs.ref }}
+            ref=${{ steps.comment-branch.outputs.head_ref }}
