@@ -1,13 +1,6 @@
 name: Update lockfiles
 on:
   workflow_dispatch:
-    inputs:
-      repository:
-        description: 'The repository from which the slash command was dispatched'
-        required: true
-      # ref:
-      #   description: 'The pull request branch'
-      #   required: true
 
 jobs:
   lockfiles:
