@@ -1,0 +1,33 @@
+name: Update lockfiles for dependabot
+on:
+  pull_request_target:
+    types: [opened, ready_for_review, reopened]
+    
+jobs:
+  lockfiles:
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot'
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # full history
+          token: ${{ secrets.PAT_REPO_FULL }}
+
+      - name: Setup .NET 5
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+
+      - name: Restore dependencies
+        run: |
+          dotnet restore --force-evaluate
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update lockfiles
+
