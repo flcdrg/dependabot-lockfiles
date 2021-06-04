@@ -19,12 +19,24 @@ jobs:
         script: |
           console.log(context);
 
+          let ref = context.sha;
+          console.log('context.sha: ' + ref);
+          if (context.EventName === 'pull_request') {
+            ref = context.Payload.pull_request.head.sha
+            console.log('context.Payload.pull_request.head.sha: ' + ref);
+            if (!ref) {
+              ref = context.Payload.after
+              console.log('context.Payload.after: ' + ref);
+            }
+          }
+          
           const result = await github.checks.create({
             name: 'Thingy',
             head_sha: context.sha,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            status: 'in_progress'
+            status: 'completed',
+            conclusion: 'success'
           });
 
           console.log(result);
