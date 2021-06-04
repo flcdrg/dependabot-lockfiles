@@ -36,7 +36,12 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             status: 'completed',
-            conclusion: 'success'
+            conclusion: 'success',
+            output: {
+              title: 'title',
+              summary: 'A summary',
+              text: 'Some text'
+            }
           });
 
           console.log(result);
