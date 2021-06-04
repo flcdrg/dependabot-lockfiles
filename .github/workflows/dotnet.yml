@@ -45,30 +45,18 @@ jobs:
           });
 
           console.log(result);
-          
-          /* await github.checks.create({
-                      owner: context.repo.owner,
-                      repo: context.repo.repo,
-                      name: "Installation Token Integration Test",
-                      head_sha: "${{ github.event.pull_request.head.sha }}",
-                      status: "completed",
-                      conclusion: "success"
-                    });
-          */
+                  
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
 
-
-        
-    # - name: Dump GitHub context
-    #   env:
-    #     GITHUB_CONTEXT: ${{ toJson(github) }}
-    #   run: echo "$GITHUB_CONTEXT"
-
-    # - uses: actions/checkout@v2
-    # - name: Setup .NET
-    #   uses: actions/setup-dotnet@v1
-    #   with:
-    #     dotnet-version: 5.0.x
-    # - name: Restore dependencies
-    #   run: dotnet restore --locked-mode
-    # - name: Build
-    #   run: dotnet build --no-restore
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore --locked-mode
+    - name: Build
+      run: dotnet build --no-restore
