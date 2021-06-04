@@ -32,7 +32,7 @@ jobs:
 
           const result = await github.checks.create({
             name: 'Thingy',
-            head_sha: "${{ github.event.pull_request.head.sha }}",
+            head_sha: ref,
             owner: context.repo.owner,
             repo: context.repo.repo,
             status: 'completed',
@@ -40,7 +40,7 @@ jobs:
             output: {
               title: 'title',
               summary: 'A summary: ' + new Date().toISOString(),
-              text: `${{ github.event.pull_request.head.sha }}\n${ref}`
+              text: `ref: ${ref}\ngithub.event.pull_request.head.sha: ${{ github.event.pull_request.head.sha }}\context.payload.after: n${context.payload.after}`
             }
           });
 
