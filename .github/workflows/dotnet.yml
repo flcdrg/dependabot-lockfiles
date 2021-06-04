@@ -32,7 +32,7 @@ jobs:
 
           const result = await github.checks.create({
             name: 'Thingy',
-            head_sha: context.sha,
+            head_sha: "${{ github.event.pull_request.head.sha }}",
             owner: context.repo.owner,
             repo: context.repo.repo,
             status: 'completed',
@@ -45,6 +45,17 @@ jobs:
           });
 
           console.log(result);
+          
+          await github.checks.create({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      name: "Installation Token Integration Test",
+                      head_sha: "${{ github.event.pull_request.head.sha }}",
+                      status: "completed",
+                      conclusion: "success"
+                    });
+
+
         
     # - name: Dump GitHub context
     #   env:
