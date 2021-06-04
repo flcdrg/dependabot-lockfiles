@@ -39,8 +39,8 @@ jobs:
             conclusion: 'success',
             output: {
               title: 'title',
-              summary: 'A summary' + new Date().toISOString(),
-              text: 'Some text'
+              summary: 'A summary: ' + new Date().toISOString(),
+              text: `${{ github.event.pull_request.head.sha }}\n${ref}`
             }
           });
 
