@@ -19,25 +19,27 @@ jobs:
         script: |
           console.log(context);
 
-          github.checks.create({
+          const result = github.checks.create({
             name: 'Thingy',
             head_sha: context.sha,
             owner: context.repo.owner,
             repo: context.repo.repo,
             status: 'in_progress'
           });
-        
-    - name: Dump GitHub context
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: echo "$GITHUB_CONTEXT"
 
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
-    - name: Restore dependencies
-      run: dotnet restore --locked-mode
-    - name: Build
-      run: dotnet build --no-restore
+          console.log(result);
+        
+    # - name: Dump GitHub context
+    #   env:
+    #     GITHUB_CONTEXT: ${{ toJson(github) }}
+    #   run: echo "$GITHUB_CONTEXT"
+
+    # - uses: actions/checkout@v2
+    # - name: Setup .NET
+    #   uses: actions/setup-dotnet@v1
+    #   with:
+    #     dotnet-version: 5.0.x
+    # - name: Restore dependencies
+    #   run: dotnet restore --locked-mode
+    # - name: Build
+    #   run: dotnet build --no-restore
