@@ -21,15 +21,15 @@ jobs:
 
           let ref = context.sha;
           console.log('context.sha: ' + ref);
-          if (context.EventName === 'pull_request') {
-            ref = context.Payload.pull_request.head.sha
-            console.log('context.Payload.pull_request.head.sha: ' + ref);
+          if (context.eventName === 'pull_request') {
+            ref = context.payload.pull_request.head.sha
+            console.log('context.payload.pull_request.head.sha: ' + ref);
             if (!ref) {
-              ref = context.Payload.after
-              console.log('context.Payload.after: ' + ref);
+              ref = context.payload.after
+              console.log('context.payload.after: ' + ref);
             }
           }
-          
+
           const result = await github.checks.create({
             name: 'Thingy',
             head_sha: context.sha,
