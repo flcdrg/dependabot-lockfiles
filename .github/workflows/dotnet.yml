@@ -12,6 +12,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: View context attributes
+      uses: actions/github-script@v4
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          console.log(context);
+
+          let ref = context.sha;
+          console.log('context.sha: ' + ref);
+          if (context.eventName === 'pull_request') {
+            ref = context.payload.pull_request.head.sha
+            console.log('context.payload.pull_request.head.sha: ' + ref);
+            if (!ref) {
+              ref = context.payload.after
+              console.log('context.payload.after: ' + ref);
+            }
+          }
+
+          const result = await github.checks.create({
+            name: 'Thingy',
+            head_sha: ref,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            status: 'completed',
+            conclusion: 'success',
+            output: {
+              title: 'title',
+              summary: 'A summary: ' + new Date().toISOString(),
+              text: `ref: ${ref}\ngithub.event.pull_request.head.sha: ${{ github.event.pull_request.head.sha }}\ncontext.payload.after: ${context.payload.after}`
+            }
+          });
+
+          console.log(result);
+                  
     - name: Dump GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
