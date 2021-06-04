@@ -39,14 +39,14 @@ jobs:
             conclusion: 'success',
             output: {
               title: 'title',
-              summary: 'A summary',
+              summary: 'A summary' + new Date().toISOString(),
               text: 'Some text'
             }
           });
 
           console.log(result);
           
-          await github.checks.create({
+          /* await github.checks.create({
                       owner: context.repo.owner,
                       repo: context.repo.repo,
                       name: "Installation Token Integration Test",
@@ -54,6 +54,7 @@ jobs:
                       status: "completed",
                       conclusion: "success"
                     });
+          */
 
 
         
