@@ -40,7 +40,7 @@ jobs:
             output: {
               title: 'title',
               summary: 'A summary: ' + new Date().toISOString(),
-              text: `ref: ${ref}\ngithub.event.pull_request.head.sha: ${{ github.event.pull_request.head.sha }}\context.payload.after: n${context.payload.after}`
+              text: `ref: ${ref}\ngithub.event.pull_request.head.sha: ${{ github.event.pull_request.head.sha }}\ncontext.payload.after: ${context.payload.after}`
             }
           });
 
