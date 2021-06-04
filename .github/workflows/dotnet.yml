@@ -19,7 +19,7 @@ jobs:
         script: |
           console.log(context);
 
-          const result = github.checks.create({
+          const result = await github.checks.create({
             name: 'Thingy',
             head_sha: context.sha,
             owner: context.repo.owner,
