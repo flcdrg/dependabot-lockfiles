@@ -1,9 +1,21 @@
 name: Update lockfiles for dependabot
+
+# We want this to run *after* auto-merge has completed.
+# Otherwise, auto-merge may fail due to the extra commit from this workflow
 on:
-  pull_request_target:
-    types: [opened, ready_for_review, reopened]
+  workflow_run:
+    workflows:
+      - Dependabot auto-merge
     
 jobs:
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+
   lockfiles:
     runs-on: ubuntu-latest
     if: github.actor == 'dependabot[bot]'
@@ -31,4 +43,3 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update lockfiles
-
