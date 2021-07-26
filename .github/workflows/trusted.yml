@@ -1,0 +1,26 @@
+# This workflow should run with full 'trusted' context and access to write-privilege GITHUB_TOKEN
+name: Trusted
+
+on:
+  workflow_run:
+    workflows: [".NET"]
+    types: 
+      - completed
+
+jobs:
+  trusted-job:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - name: Dump workflow_run context
+        env:
+          WORKFLOW_RUN_CONTEXT: ${{ toJSON(github.event.workflow_run) }}
+        run: echo "$WORKFLOW_RUN_CONTEXT"
+
+      - name: Dump environment
+        run: printenv | sort
