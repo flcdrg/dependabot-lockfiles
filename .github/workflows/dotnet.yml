@@ -31,7 +31,7 @@ jobs:
           }
 
           if (context.actor != 'dependabot[bot]') {
-            const result = await github.checks.create({
+            const result = await github.rest.checks.create({
               name: 'Thingy',
               head_sha: ref,
               owner: context.repo.owner,
