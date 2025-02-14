@@ -59,7 +59,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4.2.0
       with:
-        dotnet-version: 5.0.x
+        global-json-file: global.json
 
     - name: Restore dependencies
       run: dotnet restore --locked-mode
